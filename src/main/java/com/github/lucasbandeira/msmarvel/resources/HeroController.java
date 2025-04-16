@@ -3,6 +3,7 @@ package com.github.lucasbandeira.msmarvel.resources;
 import com.github.lucasbandeira.msmarvel.model.Hero;
 import com.github.lucasbandeira.msmarvel.model.dto.HeroRequestDto;
 import com.github.lucasbandeira.msmarvel.model.dto.HeroResponseDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,9 @@ public class HeroController implements BuildLocationUri {
         return "Ok";
     }
     @PostMapping
-    public ResponseEntity<Void>saveHero( @RequestBody HeroRequestDto heroRequestDto ){
+    public ResponseEntity<Void>saveHero( @RequestBody @Valid HeroRequestDto heroRequestDto ){
         Hero hero = Hero.fromDTO(heroRequestDto);
+        System.out.println(hero.toString());
         heroService.saveHero(hero);
         return ResponseEntity.created(generateURI(hero.getId())).build();
     }
