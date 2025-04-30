@@ -2,7 +2,7 @@ package com.github.lucasbandeira.msmarvel.validator;
 
 import com.github.lucasbandeira.msmarvel.exception.DuplicateHeroException;
 import com.github.lucasbandeira.msmarvel.model.Hero;
-import com.github.lucasbandeira.msmarvel.repository.HeroRepository;
+import com.github.lucasbandeira.msmarvel.infra.repository.HeroRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

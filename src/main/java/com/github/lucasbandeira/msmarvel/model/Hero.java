@@ -1,6 +1,6 @@
 package com.github.lucasbandeira.msmarvel.model;
 
-import com.github.lucasbandeira.msmarvel.model.dto.HeroRequestDto;
+import com.github.lucasbandeira.msmarvel.model.dto.HeroRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "tb_hero")
@@ -25,6 +24,9 @@ public class Hero {
     private List<String> skills;
     private Integer age;
     private List<String> characteristics;
+    @ManyToOne
+    @JoinColumn(name = "agent_id")
+    private Agent agent;
 
     public Hero( String heroCode, String name, List <String> skills, Integer age, List <String> characteristics ) {
         this.heroCode = heroCode;
@@ -34,7 +36,7 @@ public class Hero {
         this.characteristics = characteristics;
     }
 
-    public static Hero fromDTO( HeroRequestDto heroRequestDto ){
+    public static Hero fromDTO( HeroRequestDTO heroRequestDto ){
         Hero hero = new Hero();
         hero.heroCode = heroRequestDto.heroCode();
         hero.name = heroRequestDto.name();

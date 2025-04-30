@@ -1,4 +1,4 @@
-package com.github.lucasbandeira.msmarvel.repository;
+package com.github.lucasbandeira.msmarvel.infra.repository;
 
 import com.github.lucasbandeira.msmarvel.model.Hero;
 import org.springframework.data.jpa.repository.JpaRepository;
