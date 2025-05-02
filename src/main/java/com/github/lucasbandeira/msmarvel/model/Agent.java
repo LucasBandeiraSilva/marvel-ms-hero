@@ -4,6 +4,7 @@ import com.github.lucasbandeira.msmarvel.model.dto.AgentRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Table(name = "tb_agent")
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Agent {
 
     @Id
