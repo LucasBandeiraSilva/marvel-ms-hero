@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
-public record HeroRequestDto(
+public record HeroRequestDTO(
         @NotBlank(message = "You must provide the hero code!")
         @Column(unique = true)
         String heroCode,
