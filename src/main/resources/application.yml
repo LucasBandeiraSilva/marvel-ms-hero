@@ -34,3 +34,4 @@ eureka:
 mq:
   queues:
     hero-registration: hero-registration
+    hero-update: hero-update
