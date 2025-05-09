@@ -30,6 +30,6 @@ public class Agent {
     }
 
     public static Agent fromDTO ( AgentRequestDTO agentRequestDTO ){
-        return new Agent(agentRequestDTO.agentCode(),agentRequestDTO.name(),agentRequestDTO.active());
+        return new Agent(agentRequestDTO.agentCode(),agentRequestDTO.name(),true);
     }
 }

@@ -24,7 +24,7 @@ public class Hero {
     private List<String> skills;
     private Integer age;
     private List<String> characteristics;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "agent_id")
     private Agent agent;
 

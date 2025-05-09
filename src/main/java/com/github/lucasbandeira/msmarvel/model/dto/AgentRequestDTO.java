@@ -4,6 +4,5 @@ import java.util.UUID;
 
 public record AgentRequestDTO(
         String agentCode,
-        String name,
-        boolean active
+        String name
 ) {}
