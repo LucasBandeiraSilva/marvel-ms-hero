@@ -35,6 +35,7 @@ public class HeroService {
         if (!heroOptional.isPresent()){
             throw new RuntimeException();
         }
+
         return heroOptional.map(existingHero -> {
             existingHero.setName(dto.name());
             existingHero.setSkills(dto.skills());
@@ -51,7 +52,7 @@ public class HeroService {
     }
 
     public Optional <HeroResponseDTO> getHeroByCode( String heroCode ) {
-        return heroRepository.findByHeroCode(heroCode).map(hero -> {
+        return Optional.ofNullable(heroRepository.findByHeroCode(heroCode).map(hero -> {
             HeroResponseDTO heroResponseDTO = new HeroResponseDTO(
                     hero.getHeroCode(),
                     hero.getName(),
@@ -61,7 +62,7 @@ public class HeroService {
 
             );
             return heroResponseDTO;
-        });
+        }).orElseThrow(() -> new HeroNotFoundException("The hero you requested was not found")));
     }
 
     public List<HeroResponseDTO> getHeroesByAgent( String agentCode) {
