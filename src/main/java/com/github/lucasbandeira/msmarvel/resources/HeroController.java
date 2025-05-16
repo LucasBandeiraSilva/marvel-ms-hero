@@ -45,7 +45,6 @@ public class HeroController implements BuildLocationUri {
     @PostMapping
     public ResponseEntity<Void>saveHero( @RequestBody @Valid HeroRequestDTO heroRequestDto ){
         Hero hero = Hero.fromDTO(heroRequestDto);
-        System.out.println(hero.toString());
         heroService.saveHero(hero);
         return ResponseEntity.created(generateURI(hero.getId())).build();
     }
@@ -57,7 +56,7 @@ public class HeroController implements BuildLocationUri {
     }
 
     @PutMapping("/{heroCode}")
-    public ResponseEntity<Void>UpdateHeroById(@PathVariable String heroCode, @RequestBody HeroRequestDTO heroRequestDto){
+    public ResponseEntity<Void>UpdateHeroById(@PathVariable String heroCode, @RequestBody @Valid HeroRequestDTO heroRequestDto){
         heroService.updateHero(heroCode, heroRequestDto);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
