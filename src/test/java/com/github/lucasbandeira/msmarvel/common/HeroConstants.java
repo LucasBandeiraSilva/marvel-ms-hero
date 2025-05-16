@@ -20,6 +20,17 @@ public class HeroConstants {
         );
     }
 
+    public static Hero createInvalidHero(){
+        return new Hero(
+                "Marvel-001",
+                "Punisher",
+                List.of("Expert marksmanship", "Hand-to-hand combat"),
+                38,
+                List.of("Vengeful", "Relentless")
+        );
+    }
+
+
 
     public static HeroResponseDTO createHeroResponseDTO(){
         return new HeroResponseDTO(
@@ -41,9 +52,19 @@ public class HeroConstants {
         );
     }
 
+    public static HeroRequestDTO createInvalidHeroRequestDTO(){
+        return new HeroRequestDTO(
+                "",
+                " ",
+                List.of("fly"),
+                null,
+                List.of()
+        );
+    }
+
     public static Agent createAgent(){
         return new Agent(
-                UUID.randomUUID(),
+                null,
                 "AGENT-001",
                 "Nick Fury",
                 true

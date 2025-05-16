@@ -33,7 +33,7 @@ public class HeroService {
     public Optional<Hero> updateHero(String heroCode, HeroRequestDTO dto) {
         Optional<Hero> heroOptional = heroRepository.findByHeroCode(heroCode);
         if (!heroOptional.isPresent()){
-            throw new RuntimeException();
+            throw new HeroNotFoundException("The hero you requested was not found");
         }
 
         return heroOptional.map(existingHero -> {
@@ -41,6 +41,7 @@ public class HeroService {
             existingHero.setSkills(dto.skills());
             existingHero.setAge(dto.age());
             existingHero.setCharacteristics(dto.characteristics());
+            validator.validateHero(existingHero);
             return heroRepository.save(existingHero);
         });
     }
