@@ -66,8 +66,8 @@ public class HeroController implements BuildLocationUri {
         heroService.deleteHero(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-    @GetMapping(params = "hero-code")
-    public ResponseEntity<HeroResponseDTO> getHeroByCode(@RequestParam("hero-code")String heroCode){
+    @GetMapping("/code/{heroCode}")
+    public ResponseEntity<HeroResponseDTO> getHeroByCode(@PathVariable String heroCode){
         Optional <HeroResponseDTO> hero = heroService.getHeroByCode(heroCode);
         if (hero.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return ResponseEntity.status(HttpStatus.OK).body(hero.get());

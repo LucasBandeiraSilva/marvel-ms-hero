@@ -45,8 +45,6 @@ public class HeroControllerTest {
     @MockitoBean
     private HeroService heroService;
 
-    @MockitoBean
-    private HeroValidator validator;
 
 
     @BeforeEach
@@ -62,7 +60,6 @@ public class HeroControllerTest {
     @Test
     void findAllHeroes_returnsListOfHeroes() {
         when(heroService.getAllHeroes()).thenReturn(List.of(heroResponseDTO));
-
         List <HeroResponseDTO> list = webTestClient.get()
                 .uri("/hero")
                 .accept(MediaType.APPLICATION_JSON)
@@ -97,7 +94,7 @@ public class HeroControllerTest {
     void listHeroes_ByAgentCode_ReturnsListOfHeroes() {
         when(heroService.getHeroesByAgent(agent.getAgentCode())).thenReturn(List.of(heroResponseDTO));
 
-        List <HeroResponseDTO> list = webTestClient.get().uri("/hero/by-agent/" + agent.getAgentCode())
+        List <HeroResponseDTO> list = webTestClient.get().uri("/hero/by-agent/{agentCode}",agent.getAgentCode())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
@@ -118,7 +115,7 @@ public class HeroControllerTest {
     void listHeroes_ByAgentCode_ReturnsEmptyList() {
         when(heroService.getHeroesByAgent(any(String.class))).thenReturn(Collections.emptyList());
 
-        webTestClient.get().uri("/hero/by-agent/" + agent.getAgentCode())
+        webTestClient.get().uri("/hero/by-agent/{agentCode}",agent.getAgentCode())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
@@ -177,7 +174,7 @@ public class HeroControllerTest {
         when(heroService.getById(heroId)).thenReturn(hero);
 
         HeroResponseDTO sut = webTestClient.get()
-                .uri("/hero/" + heroId)
+                .uri("/hero/{id}", heroId)
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -200,7 +197,7 @@ public class HeroControllerTest {
         when(heroService.getById(heroId)).thenThrow(new HeroNotFoundException("The hero you requested was not found"));
 
         webTestClient.get()
-                .uri("/hero/" + heroId)
+                .uri("/hero/{id}", heroId)
                 .exchange()
                 .expectStatus()
                 .isNotFound()
@@ -217,7 +214,7 @@ public class HeroControllerTest {
         when(heroService.updateHero(hero.getHeroCode(), validHeroRequestDTO)).thenReturn(Optional.of(hero));
 
         webTestClient.put()
-                .uri("/hero/" + hero.getHeroCode())
+                .uri("/hero/{heroCode}",hero.getHeroCode())
                 .bodyValue(validHeroRequestDTO)
                 .exchange()
                 .expectStatus()
@@ -229,7 +226,7 @@ public class HeroControllerTest {
 
         when(heroService.updateHero(hero.getHeroCode(), validHeroRequestDTO)).thenThrow(new HeroNotFoundException("The hero you requested was not found!"));
 
-        webTestClient.put().uri("/hero/" + hero.getHeroCode())
+        webTestClient.put().uri("/hero/{heroCode}",hero.getHeroCode())
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(validHeroRequestDTO)
                 .exchange()
@@ -246,7 +243,7 @@ public class HeroControllerTest {
 
     @Test
     void updateHero_withInvalidData_ReturnsUnprocessableEntity() {
-        webTestClient.put().uri("/hero/"+hero.getHeroCode())
+        webTestClient.put().uri("/hero/{heroCode}",hero.getHeroCode())
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(invalidHeroRequestDTO)
                 .exchange()
@@ -258,7 +255,7 @@ public class HeroControllerTest {
     void updateHero_withInvalidData_ReturnsDuplicateHeroException(){
         when(heroService.updateHero(hero.getHeroCode(), validHeroRequestDTO)).thenThrow(new DuplicateHeroException("This hero is already registered!"));
 
-        webTestClient.put().uri("/hero/"+hero.getHeroCode())
+        webTestClient.put().uri("/hero/{heroCode}",hero.getHeroCode())
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(validHeroRequestDTO)
                 .exchange()
@@ -278,7 +275,7 @@ public class HeroControllerTest {
         doNothing().when(heroService).deleteHero(heroId);
 
         webTestClient.delete()
-                .uri("/hero/" + heroId)
+                .uri("/hero/{id}", heroId)
                 .exchange()
                 .expectStatus()
                 .isNoContent();
@@ -288,7 +285,7 @@ public class HeroControllerTest {
     void deleteHero_byId_ReturnsHeroNotFoundException(){
         doThrow(new HeroNotFoundException("The hero you requested was not found")).when(heroService).deleteHero(heroId);
 
-        webTestClient.delete().uri("/hero/"+heroId)
+        webTestClient.delete().uri("/hero/{id}",heroId)
                 .exchange()
                 .expectStatus()
                 .isNotFound();
@@ -299,7 +296,7 @@ public class HeroControllerTest {
         when(heroService.getHeroByCode(hero.getHeroCode())).thenReturn(Optional.of(heroResponseDTO));
 
         HeroResponseDTO sut = webTestClient.get()
-                .uri(uriBuilder -> uriBuilder.path("/hero").queryParam("hero-code", hero.getHeroCode()).build())
+                .uri("/hero/code/{heroCode}",hero.getHeroCode())
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -313,7 +310,7 @@ public class HeroControllerTest {
     @Test
     void getHero_ByHeroCode_ReturnsHeroNotFoundException(){
         when(heroService.getHeroByCode(hero.getHeroCode())).thenThrow(new HeroNotFoundException("The hero you requested was not found"));
-        webTestClient.get().uri(uriBuilder -> uriBuilder.path("/hero").queryParam("hero-code",hero.getHeroCode()).build())
+        webTestClient.get().uri("/hero/code/{heroCode}",hero.getHeroCode())
                 .exchange()
                 .expectStatus()
                 .isNotFound()

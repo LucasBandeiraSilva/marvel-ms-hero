@@ -105,8 +105,8 @@ public class HeroServiceTest {
 
         Optional <Hero> updatedHero = heroService.updateHero(hero.getHeroCode(), heroRequestDTO);
 
-        assertThat(updatedHero.get().getName()).isEqualTo("Bucky Barnes");
-        assertThat(updatedHero.get().getAge()).isEqualTo(100);
+        assertThat(updatedHero.get().getName()).isEqualTo(heroRequestDTO.name());
+        assertThat(updatedHero.get().getAge()).isEqualTo(heroRequestDTO.age());
 
         verify(heroRepository,times(1)).save(hero);
 

@@ -37,11 +37,11 @@ public class HeroService {
         }
 
         return heroOptional.map(existingHero -> {
+            validator.validateHero(existingHero);
             existingHero.setName(dto.name());
             existingHero.setSkills(dto.skills());
             existingHero.setAge(dto.age());
             existingHero.setCharacteristics(dto.characteristics());
-            validator.validateHero(existingHero);
             return heroRepository.save(existingHero);
         });
     }
