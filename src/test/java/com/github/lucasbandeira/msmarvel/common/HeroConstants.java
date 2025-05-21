@@ -36,25 +36,26 @@ public class HeroConstants {
         return new HeroResponseDTO(
                 "Marvel-001",
                 "Punisher",
-                List.of("Expert marksmanship", "Hand-to-hand combat", "Tactical strategy"),
+                List.of("Expert marksmanship", "Hand-to-hand combat","Tactical strategy"),
                 38,
-                List.of("Vengeful", "Relentless", "Strategic")
+                List.of("Vengeful", "Relentless","Strategic")
         );
     }
 
     public static HeroRequestDTO createHeroRequestDTO(){
         return new HeroRequestDTO(
-                "Marvel-003",
-                "Bucky Barnes",
-                List.of("Enhanced strength", "Expert marksman", "Combat skills", "Cybernetic arm"),
-                100,
-                List.of("Loyal", "Haunted", "Resilient")
+                "Marvel-002",
+                "Captain America",
+                List.of("Super soldier strength", "Expert tactician", "Shield mastery", "Enhanced agility"),
+                104,
+                List.of("Honorable", "Leadership", "Selfless")
         );
+
     }
 
     public static HeroRequestDTO createInvalidHeroRequestDTO(){
         return new HeroRequestDTO(
-                "",
+                "Marvel-099",
                 " ",
                 List.of("fly"),
                 null,
